@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "DFtrigCheck"
+		},
+		"AzureBlobStorage1_connectionString": {
+			"value": ""
+		},
+		"SQLDB_connectionString": {
+			"value": ""
+		},
+		"trigger1_properties_Pipeline_Trig_Check_parameters_fileName": {
+			"value": "@triggerBody().fileName"
+		},
+		"trigger1_properties_typeProperties_scope": {
+			"value": "/subscriptions/44b49070-e92e-4b8d-bed3-46b55b968c80/resourceGroups/RG_Demo/providers/Microsoft.Storage/storageAccounts/demoi0000843"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
