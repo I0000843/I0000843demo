@@ -1,0 +1,22 @@
+{
+	"name": "AzureDataLakeAnalytics1",
+	"properties": {
+		"annotations": [],
+		"type": "AzureDataLakeAnalytics",
+		"typeProperties": {
+			"accountName": "azdatalakeanai0000843",
+			"servicePrincipalId": "0a905858-64ca-4546-96e9-966768d14098",
+			"servicePrincipalKey": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "AzureKeyVault1",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "sec-key-name"
+			},
+			"tenant": "144e4b5f-7e14-4ffc-8f4d-42dc7c398b75",
+			"subscriptionId": "44b49070-e92e-4b8d-bed3-46b55b968c80",
+			"resourceGroupName": "RG_Demo"
+		}
+	}
+}
