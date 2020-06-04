@@ -10,6 +10,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"folderPath": {
+					"value": "/@{formatDateTime(utcnow(),'yyyy')}/ @{formatDateTime(string(utcnow()),'MM')\n}/@{formatDateTime(utcnow(),'dd')}",
+					"type": "Expression"
+				},
 				"container": "foreachopt"
 			}
 		}
