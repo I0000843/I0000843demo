@@ -1,48 +1,27 @@
 {
-	"name": "pipeline_copy_blob_starage_to_table",
+	"name": "Pipeline_Datalake_Data_Movement",
 	"properties": {
-		"description": "pipeline_copy_blob_starage_to_table",
+		"description": "Pipeline_Datalake_Data_Movement",
 		"activities": [
-			{
-				"name": "Wait1",
-				"type": "Wait",
-				"dependsOn": [],
-				"userProperties": [],
-				"typeProperties": {
-					"waitTimeInSeconds": 10
-				}
-			},
 			{
 				"name": "Copy data1",
 				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "Wait1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
 					"retryIntervalInSeconds": 30,
-					"secureOutput": true,
-					"secureInput": true
+					"secureOutput": false,
+					"secureInput": false
 				},
-				"userProperties": [
-					{
-						"name": "hello",
-						"value": "test"
-					}
-				],
+				"userProperties": [],
 				"typeProperties": {
 					"source": {
 						"type": "DelimitedTextSource",
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
-							"wildcardFileName": "movies.csv",
+							"wildcardFileName": "*",
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
@@ -50,9 +29,15 @@
 						}
 					},
 					"sink": {
-						"type": "AzureTableSink",
-						"azureTableInsertType": "merge",
-						"writeBatchSize": 10000
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
 					},
 					"enableStaging": false
 				},
@@ -64,7 +49,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "AzureTable_blob_storage",
+						"referenceName": "DelimitedText1",
 						"type": "DatasetReference"
 					}
 				]

@@ -1,0 +1,16 @@
+{
+	"name": "AzureTable_blob_storage",
+	"properties": {
+		"description": "AzureTable_blob_storage",
+		"linkedServiceName": {
+			"referenceName": "AzureTableStorage2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureTable",
+		"schema": [],
+		"typeProperties": {
+			"tableName": "Tablecheck"
+		}
+	}
+}
