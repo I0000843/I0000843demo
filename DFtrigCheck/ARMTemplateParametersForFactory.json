@@ -11,6 +11,39 @@
 		"SQLDB_connectionString": {
 			"value": ""
 		},
+		"AzureDataLakeStorage1_accountKey": {
+			"value": ""
+		},
+		"AzureTableStorage1_connectionString": {
+			"value": ""
+		},
+		"AzureTableStorage2_connectionString": {
+			"value": ""
+		},
+		"AzureSQLDB_connectionString": {
+			"value": ""
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"value": "https://adlsi0000843.dfs.core.windows.net"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"value": "https://kv-dev-testing.vault.azure.net/"
+		},
+		"AzureDataLakeAnalytics1_properties_typeProperties_accountName": {
+			"value": "azdatalakeanai0000843"
+		},
+		"AzureDataLakeAnalytics1_properties_typeProperties_servicePrincipalId": {
+			"value": "0a905858-64ca-4546-96e9-966768d14098"
+		},
+		"AzureDataLakeAnalytics1_properties_typeProperties_tenant": {
+			"value": "144e4b5f-7e14-4ffc-8f4d-42dc7c398b75"
+		},
+		"AzureDataLakeAnalytics1_properties_typeProperties_subscriptionId": {
+			"value": "44b49070-e92e-4b8d-bed3-46b55b968c80"
+		},
+		"AzureDataLakeAnalytics1_properties_typeProperties_resourceGroupName": {
+			"value": "RG_Demo"
+		},
 		"trigger1_properties_Pipeline_Trig_Check_parameters_fileName": {
 			"value": "@triggerBody().fileName"
 		},

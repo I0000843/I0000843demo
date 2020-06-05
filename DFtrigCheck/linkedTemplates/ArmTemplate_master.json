@@ -15,6 +15,50 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'SQLDB'"
 		},
+		"AzureDataLakeStorage1_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1'"
+		},
+		"AzureTableStorage1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureTableStorage1'"
+		},
+		"AzureTableStorage2_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureTableStorage2'"
+		},
+		"AzureSQLDB_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSQLDB'"
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://adlsi0000843.dfs.core.windows.net"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://kv-dev-testing.vault.azure.net/"
+		},
+		"AzureDataLakeAnalytics1_properties_typeProperties_accountName": {
+			"type": "string",
+			"defaultValue": "azdatalakeanai0000843"
+		},
+		"AzureDataLakeAnalytics1_properties_typeProperties_servicePrincipalId": {
+			"type": "string",
+			"defaultValue": "0a905858-64ca-4546-96e9-966768d14098"
+		},
+		"AzureDataLakeAnalytics1_properties_typeProperties_tenant": {
+			"type": "string",
+			"defaultValue": "144e4b5f-7e14-4ffc-8f4d-42dc7c398b75"
+		},
+		"AzureDataLakeAnalytics1_properties_typeProperties_subscriptionId": {
+			"type": "string",
+			"defaultValue": "44b49070-e92e-4b8d-bed3-46b55b968c80"
+		},
+		"AzureDataLakeAnalytics1_properties_typeProperties_resourceGroupName": {
+			"type": "string",
+			"defaultValue": "RG_Demo"
+		},
 		"trigger1_properties_Pipeline_Trig_Check_parameters_fileName": {
 			"type": "string",
 			"defaultValue": "@triggerBody().fileName"
@@ -56,6 +100,57 @@
 					"SQLDB_connectionString": {
 						"value": "[parameters('SQLDB_connectionString')]"
 					},
+					"AzureDataLakeStorage1_accountKey": {
+						"value": "[parameters('AzureDataLakeStorage1_accountKey')]"
+					},
+					"AzureTableStorage1_connectionString": {
+						"value": "[parameters('AzureTableStorage1_connectionString')]"
+					},
+					"AzureTableStorage2_connectionString": {
+						"value": "[parameters('AzureTableStorage2_connectionString')]"
+					},
+					"AzureSQLDB_connectionString": {
+						"value": "[parameters('AzureSQLDB_connectionString')]"
+					},
+					"AzureDataLakeStorage1_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
+					},
+					"AzureKeyVault1_properties_typeProperties_baseUrl": {
+						"value": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
+					},
+					"AzureDataLakeAnalytics1_properties_typeProperties_accountName": {
+						"value": "[parameters('AzureDataLakeAnalytics1_properties_typeProperties_accountName')]"
+					},
+					"AzureDataLakeAnalytics1_properties_typeProperties_servicePrincipalId": {
+						"value": "[parameters('AzureDataLakeAnalytics1_properties_typeProperties_servicePrincipalId')]"
+					},
+					"AzureDataLakeAnalytics1_properties_typeProperties_tenant": {
+						"value": "[parameters('AzureDataLakeAnalytics1_properties_typeProperties_tenant')]"
+					},
+					"AzureDataLakeAnalytics1_properties_typeProperties_subscriptionId": {
+						"value": "[parameters('AzureDataLakeAnalytics1_properties_typeProperties_subscriptionId')]"
+					},
+					"AzureDataLakeAnalytics1_properties_typeProperties_resourceGroupName": {
+						"value": "[parameters('AzureDataLakeAnalytics1_properties_typeProperties_resourceGroupName')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
 					"trigger1_properties_Pipeline_Trig_Check_parameters_fileName": {
 						"value": "[parameters('trigger1_properties_Pipeline_Trig_Check_parameters_fileName')]"
 					},
@@ -64,7 +159,9 @@
 					}
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'ArmTemplate_0')]"
+			]
 		}
 	]
 }
