@@ -14,7 +14,12 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [],
+				"userProperties": [
+					{
+						"name": "Hello",
+						"value": "Hello"
+					}
+				],
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
@@ -57,7 +62,16 @@
 								"secureOutput": false,
 								"secureInput": false
 							},
-							"userProperties": [],
+							"userProperties": [
+								{
+									"name": "Hi",
+									"value": "@{item().Table_Schema}.@{item().Table_Name}"
+								},
+								{
+									"name": "Hello",
+									"value": "containermultiple//@{concat(item().Table_Schema,'_',item().Table_Name,'.CSV')}"
+								}
+							],
 							"typeProperties": {
 								"source": {
 									"type": "AzureSqlSource",
@@ -81,11 +95,11 @@
 									"referenceName": "SQLTables",
 									"type": "DatasetReference",
 									"parameters": {
-										"TableName": {
-											"value": "@item().table_name",
+										"Table_Name": {
+											"value": "@item().Table_Name",
 											"type": "Expression"
 										},
-										"SchemaName": {
+										"Schema_Name": {
 											"value": "@item().Table_Schema",
 											"type": "Expression"
 										}
@@ -98,7 +112,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"FileName": {
-											"value": "@concat(item().table_schma,'_'item().table_Name,'.CSV')",
+											"value": "@concat(item().Table_Schema,'_',item().Table_Name,'.CSV')",
 											"type": "Expression"
 										}
 									}
