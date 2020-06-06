@@ -42,7 +42,86 @@
 						"writeBehavior": "insert"
 					},
 					"enableStaging": false,
-					"enableSkipIncompatibleRow": true
+					"parallelCopies": 4,
+					"enableSkipIncompatibleRow": false,
+					"dataIntegrationUnits": 16,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Segment",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['Segment']"
+								}
+							},
+							{
+								"source": {
+									"name": "Segment Name",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['Segment Name']"
+								}
+							},
+							{
+								"source": {
+									"name": "Family",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['Family']"
+								}
+							},
+							{
+								"source": {
+									"name": "Family Name",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['Family Name']"
+								}
+							},
+							{
+								"source": {
+									"name": "Class",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['Class']"
+								}
+							},
+							{
+								"source": {
+									"name": "Class Name",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['Class Name']"
+								}
+							},
+							{
+								"source": {
+									"name": "Commodity",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['Commodity']"
+								}
+							},
+							{
+								"source": {
+									"name": "Commodity Name",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['Commodity Name']"
+								}
+							}
+						]
+					}
 				},
 				"inputs": [
 					{
