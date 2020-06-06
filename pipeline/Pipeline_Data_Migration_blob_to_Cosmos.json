@@ -44,7 +44,6 @@
 					"enableStaging": false,
 					"parallelCopies": 4,
 					"enableSkipIncompatibleRow": false,
-					"dataIntegrationUnits": 16,
 					"translator": {
 						"type": "TabularTranslator",
 						"mappings": [
