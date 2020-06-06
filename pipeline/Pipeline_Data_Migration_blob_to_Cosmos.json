@@ -30,7 +30,7 @@
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": false,
-							"wildcardFileName": "unspsc codes_3.csv",
+							"wildcardFileName": "movies.csv",
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
