@@ -27,7 +27,7 @@
 				}
 			},
 			{
-				"name": "LKP_Current_Change_Track_Version_Activity",
+				"name": "LKP_Current",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -56,7 +56,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "LKP_Current_Change_Track_Version_Activity",
+						"activity": "LKP_Current",
 						"dependencyConditions": [
 							"Succeeded"
 						]
