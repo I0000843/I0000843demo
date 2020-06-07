@@ -10,7 +10,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "@CONCAT('Incremental-', pipeline().RunId, '.txt')",
+				"folderPath": {
+					"value": "@{CONCAT('Incremental-', pipeline().RunId, '.txt')}",
+					"type": "Expression"
+				},
 				"container": "adftutorial/incchgtracking "
 			},
 			"columnDelimiter": ",",
