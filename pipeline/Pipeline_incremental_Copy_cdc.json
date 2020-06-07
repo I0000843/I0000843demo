@@ -4,7 +4,7 @@
 		"description": "Pipeline_incremental_Copy_cdc",
 		"activities": [
 			{
-				"name": "Lookup_Last_Change_Version_Activity",
+				"name": "lkp1",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -27,7 +27,7 @@
 				}
 			},
 			{
-				"name": "LKP_Current",
+				"name": "lkp2",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -56,13 +56,13 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "LKP_Current",
+						"activity": "lkp2",
 						"dependencyConditions": [
 							"Succeeded"
 						]
 					},
 					{
-						"activity": "Lookup_Last_Change_Version_Activity",
+						"activity": "lkp1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
