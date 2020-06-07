@@ -53,6 +53,12 @@
 		"trigger1_properties_typeProperties_scope": {
 			"value": "/subscriptions/44b49070-e92e-4b8d-bed3-46b55b968c80/resourceGroups/RG_Demo/providers/Microsoft.Storage/storageAccounts/demoi0000843"
 		},
+		"trigger2_properties_pipeline_parameters_windowStart": {
+			"value": "@trigger().outputs.windowStartTime"
+		},
+		"trigger2_properties_pipeline_parameters_windowEnd": {
+			"value": "@trigger().outputs.windowEndTime"
+		},
 		"containerUri": {
 			"value": ""
 		},
