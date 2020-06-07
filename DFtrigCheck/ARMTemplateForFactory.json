@@ -2154,7 +2154,7 @@
 				"description": "Pipeline_incremental_Copy_cdc",
 				"activities": [
 					{
-						"name": "Lookup_Last_Change_Version_Activity",
+						"name": "lkp1",
 						"type": "Lookup",
 						"dependsOn": [],
 						"policy": {
@@ -2178,7 +2178,7 @@
 						}
 					},
 					{
-						"name": "LKP_Current_Change_Track_Version_Activity",
+						"name": "lkp2",
 						"type": "Lookup",
 						"dependsOn": [],
 						"policy": {
@@ -2204,17 +2204,17 @@
 						}
 					},
 					{
-						"name": "Incremental_CPY_ACTIVITY",
+						"name": "inc",
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "LKP_Current_Change_Track_Version_Activity",
+								"activity": "lkp2",
 								"dependencyConditions": [
 									"Succeeded"
 								]
 							},
 							{
-								"activity": "Lookup_Last_Change_Version_Activity",
+								"activity": "lkp1",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -2263,11 +2263,11 @@
 						]
 					},
 					{
-						"name": "StoredProceduretoUpdateChangeTrackingActivity",
+						"name": "storedproc",
 						"type": "SqlServerStoredProcedure",
 						"dependsOn": [
 							{
-								"activity": "Incremental_CPY_ACTIVITY",
+								"activity": "inc",
 								"dependencyConditions": [
 									"Succeeded"
 								]
