@@ -52,7 +52,7 @@
 				}
 			},
 			{
-				"name": "Incremental_CPY_ACTIVITY",
+				"name": "inc",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -109,11 +109,11 @@
 				]
 			},
 			{
-				"name": "StoredProceduretoUpdateChangeTrackingActivity",
+				"name": "storedproc",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
-						"activity": "Incremental_CPY_ACTIVITY",
+						"activity": "inc",
 						"dependencyConditions": [
 							"Succeeded"
 						]
