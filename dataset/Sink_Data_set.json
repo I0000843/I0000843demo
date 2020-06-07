@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": {
+				"fileName": {
 					"value": "@{CONCAT('Incremental-', pipeline().RunId, '.txt')}",
 					"type": "Expression"
 				},
