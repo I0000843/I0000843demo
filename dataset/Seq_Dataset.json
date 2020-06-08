@@ -1,5 +1,5 @@
 {
-	"name": "seqtest",
+	"name": "Seq_Dataset",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage1",
@@ -11,7 +11,7 @@
 			}
 		},
 		"annotations": [],
-		"type": "DelimitedText",
+		"type": "Binary",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
@@ -19,12 +19,8 @@
 					"value": "@dataset().FileName",
 					"type": "Expression"
 				},
-				"container": "seqtest1"
-			},
-			"columnDelimiter": ",",
-			"escapeChar": "\\",
-			"quoteChar": "\""
-		},
-		"schema": []
+				"container": "sequencesrc"
+			}
+		}
 	}
 }
