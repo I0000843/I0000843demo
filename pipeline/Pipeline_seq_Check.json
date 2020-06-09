@@ -29,8 +29,33 @@
 						"type": "BinaryReadSettings"
 					}
 				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Get Metadata1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "var",
+					"value": {
+						"value": "@replace(substring(activity('Get Metadata1').output,1,8),'sumanth_','')",
+						"type": "Expression"
+					}
+				}
 			}
 		],
+		"variables": {
+			"var": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }
