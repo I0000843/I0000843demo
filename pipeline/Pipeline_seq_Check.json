@@ -80,7 +80,7 @@
 				"typeProperties": {
 					"variableName": "var1",
 					"value": {
-						"value": "@max(int(variables('var')))",
+						"value": "@int(variables('var'))",
 						"type": "Expression"
 					}
 				}
