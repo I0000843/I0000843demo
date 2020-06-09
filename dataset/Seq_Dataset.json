@@ -13,5 +13,6 @@
 				"container": "sequencesrc"
 			}
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
 }

@@ -13,5 +13,6 @@
 				"container": "deltatgt"
 			}
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
 }
