@@ -1,0 +1,135 @@
+{
+	"name": "AZ_JB_LOAD_FILE_TO_SQL",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "RUN_ID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "RUN_ID",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "FD_TABLE_ALIAS_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "FD_TABLE_ALIAS_NAME",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TASK_NAME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "TASK_NAME",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "TASK_ID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "TASK_ID",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "SUB_TASK_ID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SUB_TASK_ID",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "START_TIME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "START_TIME",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "END_TIME",
+									"type": "String"
+								},
+								"sink": {
+									"name": "END_TIME",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "TOTAL_ROWS",
+									"type": "String"
+								},
+								"sink": {
+									"name": "TOTAL_ROWS",
+									"type": "Decimal"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "INPUT_SRC_TXT_FILE",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "AzuretargetDB",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

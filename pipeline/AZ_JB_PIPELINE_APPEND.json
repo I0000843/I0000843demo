@@ -1,0 +1,56 @@
+{
+	"name": "AZ_JB_PIPELINE_APPEND",
+	"properties": {
+		"description": "BODS_ASSY_PSCL_Activities.xlsx",
+		"activities": [
+			{
+				"name": "Append variable1",
+				"type": "AppendVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "var1",
+					"value": {
+						"value": "@concat(pipeline().Pipeline,pipeline().RunId)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Append variable2",
+				"type": "AppendVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "var2",
+					"value": {
+						"value": "@concat(pipeline().Pipeline,pipeline().RunId)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "var1",
+					"value": [
+						"'test'"
+					]
+				}
+			}
+		],
+		"variables": {
+			"var1": {
+				"type": "Array"
+			},
+			"var2": {
+				"type": "Array"
+			}
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -2,28 +2,16 @@
 	"name": "trigger2",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Started",
-		"pipeline": {
-			"pipelineReference": {
-				"referenceName": "Pipeline_last_Modified_delta_change",
-				"type": "PipelineReference"
-			},
-			"parameters": {
-				"windowStart": "@trigger().outputs.windowStartTime",
-				"windowEnd": "@trigger().outputs.windowEndTime"
-			}
-		},
-		"type": "TumblingWindowTrigger",
+		"runtimeState": "Stopped",
+		"pipelines": [],
+		"type": "BlobEventsTrigger",
 		"typeProperties": {
-			"frequency": "Minute",
-			"interval": 5,
-			"startTime": "2020-06-07T11:08:00.000Z",
-			"delay": "00:00:00",
-			"maxConcurrency": 50,
-			"retryPolicy": {
-				"intervalInSeconds": 30
-			},
-			"dependsOn": []
+			"blobPathBeginsWith": "/adlsgen/blobs/",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/44b49070-e92e-4b8d-bed3-46b55b968c80/resourceGroups/sumanthrg/providers/Microsoft.Storage/storageAccounts/sumanthadlsgen2",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
 		}
 	}
 }

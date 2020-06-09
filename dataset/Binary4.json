@@ -1,14 +1,13 @@
 {
-	"name": "Binary1",
+	"name": "Binary4",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage1",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"File_Name": {
-				"type": "string",
-				"defaultValue": "10000"
+			"FileName": {
+				"type": "string"
 			}
 		},
 		"annotations": [],
@@ -16,8 +15,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "export.txt",
-				"container": "containerinputsql"
+				"folderPath": "input",
+				"container": "containeri0000843src"
 			}
 		}
 	},

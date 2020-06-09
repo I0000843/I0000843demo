@@ -1,0 +1,62 @@
+{
+	"name": "INPUT_SRC_TXT_FILE",
+	"properties": {
+		"description": "INPUT_SRC_TXT_FILE",
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "export.txt",
+				"container": "containerinputsql"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "RUN_ID",
+				"type": "String"
+			},
+			{
+				"name": "FD_TABLE_ALIAS_NAME",
+				"type": "String"
+			},
+			{
+				"name": "TASK_NAME",
+				"type": "String"
+			},
+			{
+				"name": "TASK_ID",
+				"type": "String"
+			},
+			{
+				"name": "SUB_TASK_ID",
+				"type": "String"
+			},
+			{
+				"name": "START_TIME",
+				"type": "String"
+			},
+			{
+				"name": "END_TIME",
+				"type": "String"
+			},
+			{
+				"name": "TOTAL_ROWS",
+				"type": "String"
+			},
+			{
+				"name": "Prop_8",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,58 @@
+{
+	"name": "Target_File",
+	"properties": {
+		"description": "File that holds the SQL source table data",
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Target_file.txt",
+				"container": "containerinputsql"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "RUN_ID",
+				"type": "String"
+			},
+			{
+				"name": "FD_TABLE_ALIAS_NAME",
+				"type": "String"
+			},
+			{
+				"name": "TASK_NAME",
+				"type": "String"
+			},
+			{
+				"name": "TASK_ID",
+				"type": "String"
+			},
+			{
+				"name": "SUB_TASK_ID",
+				"type": "String"
+			},
+			{
+				"name": "START_TIME",
+				"type": "String"
+			},
+			{
+				"name": "END_TIME",
+				"type": "String"
+			},
+			{
+				"name": "TOTAL_ROWS",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

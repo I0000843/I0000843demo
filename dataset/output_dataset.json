@@ -1,14 +1,13 @@
 {
-	"name": "Binary1",
+	"name": "output_dataset",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureBlobStorage1",
+			"referenceName": "AzureBlobStorage2",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"File_Name": {
-				"type": "string",
-				"defaultValue": "10000"
+			"fileName": {
+				"type": "string"
 			}
 		},
 		"annotations": [],
@@ -16,8 +15,11 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "export.txt",
-				"container": "containerinputsql"
+				"fileName": {
+					"value": "@dataset().fileName",
+					"type": "Expression"
+				},
+				"container": "output"
 			}
 		}
 	},

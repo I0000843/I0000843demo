@@ -1,0 +1,507 @@
+{
+	"name": "PL_ORACLE_MASTER_DATA_DYNAMIC_EXTRCATION_RECOVEREY",
+	"properties": {
+		"activities": [
+			{
+				"name": "AT_LKP_CONTROL_TBL",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "SELECT * FROM SRC_TBL_INFO WHERE STATUS='Active' AND SOURCENAME='MD'  AND Recmode=0",
+						"queryTimeout": "02:00:00"
+					},
+					"dataset": {
+						"referenceName": "DS_ASQL_CONTROL_TBL",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "AT_FOREACH_MD_TBLS_PROCESS",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "AT_LKP_CONTROL_TBL",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('AT_LKP_CONTROL_TBL').output.value",
+						"type": "Expression"
+					},
+					"isSequential": false,
+					"batchCount": 20,
+					"activities": [
+						{
+							"name": "AT_CPY_DYNAMIC_DATA_PROCESSING_FROM_ORACLE_MD",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "AT_START_TIME",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "OracleSource",
+									"oracleReaderQuery": {
+										"value": "@item().SourceQry",
+										"type": "Expression"
+									},
+									"partitionOption": "None",
+									"queryTimeout": "02:00:00"
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "DS_ORACLE_TEST",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_ADLS_GN",
+									"type": "DatasetReference",
+									"parameters": {
+										"TableName": {
+											"value": "@item().SourceTblName",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						},
+						{
+							"name": "AT_START_TIME",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "V_START_TIME",
+								"value": {
+									"value": "@utcnow()",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "AT_SP_SUCCESS",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "AT_CPY_DYNAMIC_DATA_PROCESSING_FROM_ORACLE_MD",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[dbo].[SPETLLOG]",
+								"storedProcedureParameters": {
+									"COPY_DURATION": {
+										"value": {
+											"value": "@activity('AT_CPY_DYNAMIC_DATA_PROCESSING_FROM_ORACLE_MD').output.copyDuration",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"CPY_ACT_NAME": {
+										"value": "AT_CPY_DYNAMIC_DATA_PROCESSING_FROM_ORACLE_MD",
+										"type": "String"
+									},
+									"DATAFACTORY_NAME": {
+										"value": {
+											"value": "@pipeline().DataFactory",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"ERROR_MSG": {
+										"value": "NA",
+										"type": "String"
+									},
+									"IR_NAME": {
+										"value": {
+											"value": "@activity('AT_CPY_DYNAMIC_DATA_PROCESSING_FROM_ORACLE_MD').output.effectiveIntegrationRuntime",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"PL_END_TIME": {
+										"value": {
+											"value": "@utcnow()",
+											"type": "Expression"
+										},
+										"type": "DateTime"
+									},
+									"PL_NAME": {
+										"value": {
+											"value": "@pipeline().Pipeline",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"PL_RUN_ID": {
+										"value": {
+											"value": "@pipeline().RunId",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"PL_START_TIME": {
+										"value": {
+											"value": "@variables('V_START_TIME')",
+											"type": "Expression"
+										},
+										"type": "DateTime"
+									},
+									"PL_STATUS": {
+										"value": "SUCCESS",
+										"type": "String"
+									},
+									"SOURCEOBJNAME": {
+										"value": {
+											"value": "@item().SourceTblName",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"SOURCEPATH": {
+										"value": "NA",
+										"type": "String"
+									},
+									"SOURCETYPE": {
+										"value": "ORACLE",
+										"type": "String"
+									},
+									"SRC_READ_ROWS": {
+										"value": {
+											"value": "@activity('AT_CPY_DYNAMIC_DATA_PROCESSING_FROM_ORACLE_MD').output.rowsRead",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"TAGTTYPE": {
+										"value": "ADLS",
+										"type": "String"
+									},
+									"TGT_READ_ROWS": {
+										"value": {
+											"value": "@activity('AT_CPY_DYNAMIC_DATA_PROCESSING_FROM_ORACLE_MD').output.rowsCopied",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"TGTOBJNAME": {
+										"value": {
+											"value": "@item().SourceTblName",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"TGTPATH": {
+										"value": {
+											"value": "@concat('Oracle/Table/',item().SourceTblName,'/LandedFiles/YYYY=',\nformatDateTime(utcnow(),'yyyy'),'/MM=',formatDateTime(utcnow(),'MM'),'/DD=',\nformatDateTime(utcnow(),'dd'))",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"THROUGHPUT": {
+										"value": {
+											"value": "@activity('AT_CPY_DYNAMIC_DATA_PROCESSING_FROM_ORACLE_MD').output.throughput",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"TRIGGER_NAME": {
+										"value": {
+											"value": "@pipeline().TriggerName",
+											"type": "Expression"
+										},
+										"type": "String"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "LS_ASQL",
+								"type": "LinkedServiceReference"
+							}
+						},
+						{
+							"name": "AT_SP_ERROR",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "AT_CPY_DYNAMIC_DATA_PROCESSING_FROM_ORACLE_MD",
+									"dependencyConditions": [
+										"Failed"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[dbo].[SPETLLOG]",
+								"storedProcedureParameters": {
+									"COPY_DURATION": {
+										"value": "NA",
+										"type": "String"
+									},
+									"CPY_ACT_NAME": {
+										"value": "AT_CPY_DYNAMIC_DATA_PROCESSING_FROM_ORACLE_MD",
+										"type": "String"
+									},
+									"DATAFACTORY_NAME": {
+										"value": {
+											"value": "@pipeline().DataFactory",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"ERROR_MSG": {
+										"value": {
+											"value": "@activity('AT_CPY_DYNAMIC_DATA_PROCESSING_FROM_ORACLE_MD').error.Message",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"IR_NAME": {
+										"value": {
+											"value": "@activity('AT_CPY_DYNAMIC_DATA_PROCESSING_FROM_ORACLE_MD').output.effectiveIntegrationRuntime",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"PL_END_TIME": {
+										"value": {
+											"value": "@utcnow()",
+											"type": "Expression"
+										},
+										"type": "DateTime"
+									},
+									"PL_NAME": {
+										"value": {
+											"value": "@pipeline().Pipeline",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"PL_RUN_ID": {
+										"value": {
+											"value": "@pipeline().RunId",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"PL_START_TIME": {
+										"value": {
+											"value": "@variables('V_START_TIME')",
+											"type": "Expression"
+										},
+										"type": "DateTime"
+									},
+									"PL_STATUS": {
+										"value": "FAIL",
+										"type": "String"
+									},
+									"SOURCEOBJNAME": {
+										"value": {
+											"value": "@item().SourceTblName",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"SOURCEPATH": {
+										"value": "NA",
+										"type": "String"
+									},
+									"SOURCETYPE": {
+										"value": "ORACLE",
+										"type": "String"
+									},
+									"SRC_READ_ROWS": {
+										"value": "NA",
+										"type": "String"
+									},
+									"TAGTTYPE": {
+										"value": "ADLS",
+										"type": "String"
+									},
+									"TGT_READ_ROWS": {
+										"value": "NA",
+										"type": "String"
+									},
+									"TGTOBJNAME": {
+										"value": {
+											"value": "@item().SourceTblName",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"TGTPATH": {
+										"value": {
+											"value": "@concat('Oracle/Table/',item().SourceTblName,'/LandedFiles/YYYY=',\nformatDateTime(utcnow(),'yyyy'),'/MM=',formatDateTime(utcnow(),'MM'),'/DD=',\nformatDateTime(utcnow(),'dd'))",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"THROUGHPUT": {
+										"value": "NA",
+										"type": "String"
+									},
+									"TRIGGER_NAME": {
+										"value": {
+											"value": "@pipeline().TriggerName",
+											"type": "Expression"
+										},
+										"type": "String"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "LS_ASQL",
+								"type": "LinkedServiceReference"
+							}
+						},
+						{
+							"name": "AT_SP_RECMODE_SET_TO_1",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "AT_SP_SUCCESS",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[dbo].[SPUPDRECMODE]",
+								"storedProcedureParameters": {
+									"Recmode": {
+										"value": "1",
+										"type": "String"
+									},
+									"SourceTblName": {
+										"value": {
+											"value": "@item().SourceTblName",
+											"type": "Expression"
+										},
+										"type": "String"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "LS_ASQL",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "AT_SP_RECMODE_SET_TO_0",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "AT_FOREACH_MD_TBLS_PROCESS",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[SPUPDRECMODEzero]",
+					"storedProcedureParameters": {
+						"Recmode": {
+							"value": "0",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_ASQL",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"parameters": {
+			"GRPNAME": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"V_START_TIME": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

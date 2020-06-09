@@ -1,0 +1,33 @@
+{
+	"name": "JB_COPY_CSV_FILE_TO_TGT",
+	"properties": {
+		"description": "JB_COPY_CSV_FILE_TO_TGT",
+		"activities": [
+			{
+				"name": "Employeedatacleanflow",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "Employeedatacleanflow",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					}
+				}
+			}
+		],
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

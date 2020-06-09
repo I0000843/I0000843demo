@@ -1,0 +1,64 @@
+{
+	"name": "PL_ORACLE_MASTER",
+	"properties": {
+		"activities": [
+			{
+				"name": "AT_EX_PL_GRP_1",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_ORACLE_MASTER_DATA_DYNAMIC_EXTRCATION",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"GRPNAME": {
+							"value": "@pipeline().parameters.GRPNAME",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "AT_EX_PL_GRP_2",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "AT_EX_PL_GRP_1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_ORACLE_MASTER_DATA_DYNAMIC_EXTRCATION",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"GRPNAME": {
+							"value": "@pipeline().parameters.GRP2",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"parameters": {
+			"GRPNAME": {
+				"type": "string",
+				"defaultValue": "1"
+			},
+			"GRP2": {
+				"type": "string",
+				"defaultValue": "2"
+			}
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

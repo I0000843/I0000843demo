@@ -1,0 +1,17 @@
+{
+	"name": "AzuretargetDB",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzuretargetDB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "movies"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

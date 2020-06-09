@@ -1,0 +1,17 @@
+{
+	"name": "DS_ORACLE_TEST",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_ORACLE",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "OracleTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "HR",
+			"table": "EMPLOYEES"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

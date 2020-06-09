@@ -1,11 +1,11 @@
 {
-	"name": "AzureKeyVault1",
+	"name": "Debasis_LS",
 	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"annotations": [],
 		"type": "AzureKeyVault",
 		"typeProperties": {
-			"baseUrl": "https://AKV-Deb.vault.azure.net/"
+			"baseUrl": "https://Debasis.vault.azure.net/"
 		}
 	}
 }
