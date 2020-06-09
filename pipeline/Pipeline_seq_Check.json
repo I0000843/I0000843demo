@@ -56,7 +56,7 @@
 							"typeProperties": {
 								"variableName": "var",
 								"value": {
-									"value": "substring(item(),1,8)",
+									"value": "@replace('sumanth_','sumanth_','')",
 									"type": "Expression"
 								}
 							}
