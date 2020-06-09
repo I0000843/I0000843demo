@@ -56,7 +56,7 @@
 							"typeProperties": {
 								"variableName": "var",
 								"value": {
-									"value": "substring(@activity('Get Metadata1').output,1,8)",
+									"value": "substring(item(),1,8)",
 									"type": "Expression"
 								}
 							}
