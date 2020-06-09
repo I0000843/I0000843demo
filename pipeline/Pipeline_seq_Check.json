@@ -49,47 +49,67 @@
 					},
 					"activities": [
 						{
-							"name": "Set variable1",
-							"type": "SetVariable",
+							"name": "Append variable1",
+							"type": "AppendVariable",
 							"dependsOn": [],
 							"userProperties": [],
 							"typeProperties": {
 								"variableName": "var",
 								"value": {
-									"value": "@replace(item().name,'sumanth_','')",
-									"type": "Expression"
-								}
-							}
-						},
-						{
-							"name": "Append variable1",
-							"type": "AppendVariable",
-							"dependsOn": [
-								{
-									"activity": "Set variable1",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
-							"userProperties": [],
-							"typeProperties": {
-								"variableName": "var1",
-								"value": {
-									"value": "@max(variables('var'))",
+									"value": "@replace(replace(item().name,'sumanth_',''),'.csv','')",
 									"type": "Expression"
 								}
 							}
 						}
 					]
 				}
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "ForEach1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "BinarySource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"wildcardFileName": {
+								"value": "@max(variables('var'))",
+								"type": "Expression"
+							}
+						},
+						"formatSettings": {
+							"type": "BinaryReadSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "Seq_Dataset",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"variables": {
 			"var": {
-				"type": "String"
-			},
-			"var1": {
 				"type": "Array"
 			}
 		},
