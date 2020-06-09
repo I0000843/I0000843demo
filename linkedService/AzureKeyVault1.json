@@ -5,7 +5,7 @@
 		"annotations": [],
 		"type": "AzureKeyVault",
 		"typeProperties": {
-			"baseUrl": "https://AKV-Deb.vault.azure.net/"
+			"baseUrl": "https://kv-dev-testing.vault.azure.net/"
 		}
 	}
 }
