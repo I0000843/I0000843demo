@@ -45,7 +45,7 @@
 				"typeProperties": {
 					"variableName": "var",
 					"value": {
-						"value": "@replace(activity('Get Metadata1').output,'sumanth_','')",
+						"value": "activity('Get Metadata1').output",
 						"type": "Expression"
 					}
 				}
