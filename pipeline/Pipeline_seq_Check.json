@@ -23,7 +23,8 @@
 						"childItems"
 					],
 					"storeSettings": {
-						"type": "AzureBlobStorageReadSettings"
+						"type": "AzureBlobStorageReadSettings",
+						"recursive": true
 					},
 					"formatSettings": {
 						"type": "BinaryReadSettings"
@@ -55,7 +56,10 @@
 							"userProperties": [],
 							"typeProperties": {
 								"variableName": "var",
-								"value": "@replace(replace(item().name,'sumanth_',''),'.csv','')"
+								"value": {
+									"value": "@replace(replace(item().name,'sumanth_',''),'.csv','')",
+									"type": "Expression"
+								}
 							}
 						}
 					]
