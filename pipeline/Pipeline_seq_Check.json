@@ -31,8 +31,8 @@
 				}
 			},
 			{
-				"name": "Set variable1",
-				"type": "SetVariable",
+				"name": "ForEach1",
+				"type": "ForEach",
 				"dependsOn": [
 					{
 						"activity": "Get Metadata1",
@@ -43,11 +43,25 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "var",
-					"value": {
-						"value": "activity('Get Metadata1').output",
+					"items": {
+						"value": "@activity('Get Metadata1').output.childItems",
 						"type": "Expression"
-					}
+					},
+					"activities": [
+						{
+							"name": "Set variable1",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "var",
+								"value": {
+									"value": "substring(@activity('Get Metadata1').output,1,8)",
+									"type": "Expression"
+								}
+							}
+						}
+					]
 				}
 			}
 		],
