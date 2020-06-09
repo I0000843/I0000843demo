@@ -49,19 +49,36 @@
 					},
 					"activities": [
 						{
-							"name": "Append variable1",
-							"type": "AppendVariable",
+							"name": "Set variable2",
+							"type": "SetVariable",
 							"dependsOn": [],
 							"userProperties": [],
 							"typeProperties": {
 								"variableName": "var",
-								"value": {
-									"value": "@replace(replace(item().name,'sumanth_',''),'.csv','')",
-									"type": "Expression"
-								}
+								"value": "@replace(replace(item().name,'sumanth_',''),'.csv','')"
 							}
 						}
 					]
+				}
+			},
+			{
+				"name": "Append variable1",
+				"type": "AppendVariable",
+				"dependsOn": [
+					{
+						"activity": "ForEach1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "var1",
+					"value": {
+						"value": "@max(int(variables('var')))",
+						"type": "Expression"
+					}
 				}
 			},
 			{
@@ -69,7 +86,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "ForEach1",
+						"activity": "Append variable1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -90,12 +107,18 @@
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
 							"wildcardFileName": {
-								"value": "@max(variables('var'))",
+								"value": "@concat('sumanth_',variables('var1'),'.csv')",
 								"type": "Expression"
 							}
 						},
 						"formatSettings": {
 							"type": "BinaryReadSettings"
+						}
+					},
+					"sink": {
+						"type": "BinarySink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
 						}
 					},
 					"enableStaging": false
@@ -105,11 +128,20 @@
 						"referenceName": "Seq_Dataset",
 						"type": "DatasetReference"
 					}
+				],
+				"outputs": [
+					{
+						"referenceName": "output",
+						"type": "DatasetReference"
+					}
 				]
 			}
 		],
 		"variables": {
 			"var": {
+				"type": "String"
+			},
+			"var1": {
 				"type": "Array"
 			}
 		},
