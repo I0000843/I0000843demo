@@ -10,5 +10,6 @@
 		"typeProperties": {
 			"collectionName": "items"
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
 }

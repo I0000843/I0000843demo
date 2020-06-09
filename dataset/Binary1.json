@@ -5,19 +5,16 @@
 			"referenceName": "AzureBlobStorage1",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"File_Name": {
-				"type": "string",
-				"defaultValue": "10000"
-			}
-		},
 		"annotations": [],
 		"type": "Binary",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "export.txt",
-				"container": "containerinputsql"
+				"folderPath": {
+					"value": "/@{formatDateTime(utcnow(),'yyyy')}/ @{formatDateTime(string(utcnow()),'MM')\n}/@{formatDateTime(utcnow(),'dd')}",
+					"type": "Expression"
+				},
+				"container": "foreachopt"
 			}
 		}
 	},

@@ -13,5 +13,6 @@
 				"container": "deltasrc"
 			}
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
 }

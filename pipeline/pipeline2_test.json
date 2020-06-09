@@ -34,7 +34,8 @@
 									"exists"
 								],
 								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings"
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true
 								},
 								"formatSettings": {
 									"type": "BinaryReadSettings"
@@ -141,5 +142,6 @@
 			}
 		},
 		"annotations": []
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
 }

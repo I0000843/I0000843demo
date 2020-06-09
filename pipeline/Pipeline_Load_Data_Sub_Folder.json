@@ -1,7 +1,7 @@
 {
-	"name": "Pipeline_last_Modified_delta_change",
+	"name": "Pipeline_Load_Data_Sub_Folder",
 	"properties": {
-		"description": "Pipeline_last_Modified_delta_change",
+		"description": "Pipeline_Load_Data_Sub_Folder",
 		"activities": [
 			{
 				"name": "Copy data1",
@@ -20,15 +20,7 @@
 						"type": "BinarySource",
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"modifiedDatetimeStart": {
-								"value": "@pipeline().parameters.windowStart",
-								"type": "Expression"
-							},
-							"modifiedDatetimeEnd": {
-								"value": "@pipeline().parameters.windowEnd",
-								"type": "Expression"
-							}
+							"recursive": true
 						},
 						"formatSettings": {
 							"type": "BinaryReadSettings"
@@ -48,26 +40,18 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "src_delta_Dataset",
+						"referenceName": "inp",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "delta_tgt_Dataset",
+						"referenceName": "Binary1",
 						"type": "DatasetReference"
 					}
 				]
 			}
 		],
-		"parameters": {
-			"windowStart": {
-				"type": "string"
-			},
-			"windowEnd": {
-				"type": "string"
-			}
-		},
 		"annotations": []
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
