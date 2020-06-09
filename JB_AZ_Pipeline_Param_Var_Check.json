@@ -1,0 +1,168 @@
+{
+	"name": "JB_AZ_Pipeline_Param_Var_Check",
+	"properties": {
+		"description": "JB_AZ_Pipeline_Param_Var_Check",
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Set value for file type",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "containeri0000843//@{concat(pipeline().parameters.FILENAME,'.csv')}"
+					},
+					{
+						"name": "Destination",
+						"value": "dbo.@{pipeline().parameters.TABLENAME}"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink"
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "Input_CSV_FILE",
+						"type": "DatasetReference",
+						"parameters": {
+							"FILENAME": {
+								"value": "@concat(pipeline().parameters.FILENAME,'.csv')",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Output_DB_table",
+						"type": "DatasetReference",
+						"parameters": {
+							"TABLENAME": {
+								"value": "@pipeline().parameters.TABLENAME",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			},
+			{
+				"name": "Copy data2",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "Output_DB_table",
+						"type": "DatasetReference",
+						"parameters": {
+							"TABLENAME": {
+								"value": "@pipeline().parameters.TABLENAME",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Input_CSV_FILE",
+						"type": "DatasetReference",
+						"parameters": {
+							"FILENAME": {
+								"value": "@concat(pipeline().parameters.FILENAME,utcnow(),'.csv')",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			},
+			{
+				"name": "Set value for file type",
+				"description": "Set value for file type",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Copy data2",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "TEMP",
+					"value": {
+						"value": "@replace(pipeline().parameters.FILENAME,'cars','testvar')",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"FILENAME": {
+				"type": "string"
+			},
+			"TABLENAME": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"TEMP": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,18 @@
+{
+	"name": "SourceDataset_46c",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "containeri0000843src"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

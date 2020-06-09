@@ -1,0 +1,142 @@
+{
+	"name": "Pipeline_Data_Migration_blob_to_Cosmos",
+	"properties": {
+		"description": "Pipeline_Data_Migration_blob_to_Cosmos",
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "src",
+						"value": "blob"
+					},
+					{
+						"name": "target",
+						"value": "cosmos"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": false,
+							"wildcardFileName": "movies.csv",
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "CosmosDbSqlApiSink",
+						"writeBehavior": "insert"
+					},
+					"enableStaging": false,
+					"parallelCopies": 4,
+					"enableSkipIncompatibleRow": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Segment",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['Segment']"
+								}
+							},
+							{
+								"source": {
+									"name": "Segment Name",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['Segment Name']"
+								}
+							},
+							{
+								"source": {
+									"name": "Family",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['Family']"
+								}
+							},
+							{
+								"source": {
+									"name": "Family Name",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['Family Name']"
+								}
+							},
+							{
+								"source": {
+									"name": "Class",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['Class']"
+								}
+							},
+							{
+								"source": {
+									"name": "Class Name",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['Class Name']"
+								}
+							},
+							{
+								"source": {
+									"name": "Commodity",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['Commodity']"
+								}
+							},
+							{
+								"source": {
+									"name": "Commodity Name",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['Commodity Name']"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "src_blob_storage",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "CosmosDbSqlApiCollection1",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

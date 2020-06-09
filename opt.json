@@ -1,0 +1,22 @@
+{
+	"name": "opt",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": {
+					"value": "concat=@formatDateTime(utcnow(), 'yyyy')/@formatDateTime(utcnow(), 'MM')",
+					"type": "Expression"
+				},
+				"container": "opt"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

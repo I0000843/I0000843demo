@@ -1,0 +1,11 @@
+{
+	"name": "Debasis_LS",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://Debasis.vault.azure.net/"
+		}
+	}
+}

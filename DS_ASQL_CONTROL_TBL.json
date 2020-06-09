@@ -1,0 +1,17 @@
+{
+	"name": "DS_ASQL_CONTROL_TBL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_ASQL",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "SRC_TBL_INFO"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

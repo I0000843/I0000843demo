@@ -1,0 +1,36 @@
+{
+	"name": "DS_ADLS_GN",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_ADLS_GENE2",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"TableName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@concat(dataset().TableName,'_',formatdatetime(utcnow(),'yyyyMMdd'),'.csv')",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@concat('Oracle/Table/',dataset().TableName,'/LandedFiles/YYYY=',\nformatDateTime(utcnow(),'yyyy'),'/MM=',formatDateTime(utcnow(),'MM'),'/DD=',\nformatDateTime(utcnow(),'dd'))",
+					"type": "Expression"
+				},
+				"fileSystem": "adlsgen"
+			},
+			"columnDelimiter": "|",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

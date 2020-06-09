@@ -1,0 +1,18 @@
+{
+	"name": "delta_tgt_Dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "deltatgt"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
